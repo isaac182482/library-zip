@@ -1,0 +1,48 @@
+local pg = game.Players.LocalPlayer.PlayerGui
+local sc = Instance.new("ScreenGui")
+sc.ResetOnSpawn = false
+sc.Parent = pg
+
+local function createPanel(pai)
+f = Instance.new("Frame")
+f.Size = UDim2.new(0, 500, 0, 400)
+f.Active = true
+f.BackgroundColor3 = Color3.new(0, 0, 0)
+f.Draggable = true
+f.BackgroundTransparency = 0.1
+f.Parent = pai
+exit = Instance.new("TextButton")
+exit.Name = "Exit b"
+exit.Position = UDim2.new(0, 465, 0, 0)
+exit.Size = UDim2.new(0, 40, 0, 40)
+exit.BackgroundColor3 = Color3.new(1, 0, 0)
+exit.TextColor3 = Color3.new(1, 1, 1)
+exit.Text = "X"
+exit.TextScaled = true
+exit.BackgroundTransparency = 1
+exit.Parent = f
+UIcorner = Instance.new("UICorner")
+UIcorner.CornerRadius = UDim.new(0, 16)
+UIcorner.Parent = f
+exit.MouseButton1Click:Connect(function()
+f.Visible = false
+end)
+
+local listLayout = Instance.new("UIListLayout")
+listLayout.Parent = f
+listLayout.SortOrder = Enum.SortOrder.LayoutOrder
+listLayout.Padding = UDim.new(0, 10)
+end
+
+local function addButton(Texto, r, g, b, action)
+bt = Instance.new("TextButton")
+bt.Name = "Buttan"
+bt.Size = UDim2.new(0, 190, 0, 40)
+bt.Text = Texto
+bt.Position = UDim2.new(0, 0, 90, 0)
+bt.BackgroundColor3 = Color3.new(r, g, b)
+bt.Parent = f
+bt.MouseButton1Click:Connect(function()
+action()
+end)
+end
