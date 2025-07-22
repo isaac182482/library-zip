@@ -1,72 +1,75 @@
 local Zipp = {}
-local f = nil
-local titleLabel = nil
+
+local painel
+local grid
 
 function Zipp:createPanel(pai)
 	local sc = Instance.new("ScreenGui")
 	sc.ResetOnSpawn = false
+	sc.Name = "ZippUI"
 	sc.Parent = pai
 
-	f = Instance.new("Frame")
-	f.Size = UDim2.new(0, 500, 0, 400)
-	f.Active = true
-	f.Draggable = true
-	f.BackgroundColor3 = Color3.new(0, 0, 0)
-	f.BackgroundTransparency = 0.1
-	f.Position = UDim2.new(0.5, -250, 0.5, -200)
-	f.Parent = sc
+	painel = Instance.new("Frame")
+	painel.Size = UDim2.new(0, 500, 0, 400)
+	painel.Position = UDim2.new(0.5, -250, 0.5, -200)
+	painel.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+	painel.BackgroundTransparency = 0.1
+	painel.Active = true
+	painel.Draggable = true
+	painel.Parent = sc
 
-	local exit = Instance.new("TextButton")
-	exit.Name = "Exit b"
-	exit.Position = UDim2.new(0, 460, 0, 0)
-	exit.Size = UDim2.new(0, 40, 0, 40)
-	exit.BackgroundColor3 = Color3.new(1, 0, 0)
-	exit.TextColor3 = Color3.new(1, 1, 1)
-	exit.Text = "X"
-	exit.TextScaled = true
-	exit.BackgroundTransparency = 1
-	exit.Parent = f
+	local corner = Instance.new("UICorner", painel)
+	corner.CornerRadius = UDim.new(0, 12)
 
-	exit.MouseButton1Click:Connect(function()
-		f.Visible = false
+	local titulo = Instance.new("TextLabel")
+	titulo.Size = UDim2.new(1, -50, 0, 40)
+	titulo.Position = UDim2.new(0, 10, 0, 0)
+	titulo.BackgroundTransparency = 1
+	titulo.TextColor3 = Color3.new(1, 1, 1)
+	titulo.TextScaled = true
+	titulo.Font = Enum.Font.GothamBold
+	titulo.Text = "Zipp Grid"
+	titulo.TextXAlignment = Enum.TextXAlignment.Left
+	titulo.Parent = painel
+
+	local fechar = Instance.new("TextButton")
+	fechar.Size = UDim2.new(0, 30, 0, 30)
+	fechar.Position = UDim2.new(1, -35, 0, 5)
+	fechar.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+	fechar.Text = "X"
+	fechar.TextColor3 = Color3.new(1, 1, 1)
+	fechar.TextScaled = true
+	fechar.Font = Enum.Font.GothamBold
+	fechar.Parent = painel
+	Instance.new("UICorner", fechar).CornerRadius = UDim.new(0, 8)
+
+	fechar.MouseButton1Click:Connect(function()
+		painel.Visible = false
 	end)
 
-	titleLabel = Instance.new("TextLabel")
-	titleLabel.Size = UDim2.new(0, 300, 0, 40)
-	titleLabel.Position = UDim2.new(0.5, -150, 0, 0)
-	titleLabel.BackgroundTransparency = 1
-	titleLabel.TextColor3 = Color3.new(1, 1, 1)
-	titleLabel.Font = Enum.Font.SourceSansBold
-	titleLabel.TextScaled = true
-	titleLabel.Text = ""
-	titleLabel.Parent = f
-
-	local UIcorner = Instance.new("UICorner")
-	UIcorner.CornerRadius = UDim.new(0, 16)
-	UIcorner.Parent = f
-
-	local listLayout = Instance.new("UIListLayout")
-	listLayout.Parent = f
-	listLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	listLayout.Padding = UDim.new(0, 10)
-	listLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+	grid = Instance.new("UIGridLayout", painel)
+	grid.FillDirection = Enum.FillDirection.Horizontal
+	grid.CellSize = UDim2.new(0, 140, 0, 40)
+	grid.CellPadding = UDim2.new(0, 10, 0, 10)
+	grid.StartCorner = Enum.StartCorner.TopLeft
+	grid.SortOrder = Enum.SortOrder.LayoutOrder
+	grid.VerticalAlignment = Enum.VerticalAlignment.Top
+	grid.HorizontalAlignment = Enum.HorizontalAlignment.Left
 end
 
-function Zipp:setTitle(text)
-	if titleLabel then
-		titleLabel.Text = text
-	end
-end
-
-function Zipp:addButton(Texto, scaled, r, g, b, action)
+function Zipp:addButton(text, r, g, b, action)
 	local bt = Instance.new("TextButton")
-	bt.Name = "Buttan"
-	bt.Size = UDim2.new(0, 190, 0, 40)
-	bt.Text = Texto
+	bt.Size = UDim2.new(0, 140, 0, 40)
 	bt.BackgroundColor3 = Color3.new(r, g, b)
+	bt.Text = text
+	bt.TextScaled = true
+	bt.Font = Enum.Font.Gotham
 	bt.TextColor3 = Color3.new(1, 1, 1)
-	bt.TextScaled = scaled
-	bt.Parent = f
+	bt.Parent = painel
+
+	local corner = Instance.new("UICorner", bt)
+	corner.CornerRadius = UDim.new(0, 8)
+
 	bt.MouseButton1Click:Connect(function()
 		action()
 	end)
