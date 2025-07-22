@@ -1,5 +1,6 @@
 local Zipp = {}
 local f = nil
+local titleLabel = nil
 
 function Zipp:createPanel(pai)
 	local sc = Instance.new("ScreenGui")
@@ -25,9 +26,20 @@ function Zipp:createPanel(pai)
 	exit.TextScaled = true
 	exit.BackgroundTransparency = 1
 	exit.Parent = f
+
 	exit.MouseButton1Click:Connect(function()
-	f.Visible = false
+		f.Visible = false
 	end)
+
+	titleLabel = Instance.new("TextLabel")
+	titleLabel.Size = UDim2.new(0, 300, 0, 40)
+	titleLabel.Position = UDim2.new(0.5, -150, 0, 0)
+	titleLabel.BackgroundTransparency = 1
+	titleLabel.TextColor3 = Color3.new(1, 1, 1)
+	titleLabel.Font = Enum.Font.SourceSansBold
+	titleLabel.TextScaled = true
+	titleLabel.Text = ""
+	titleLabel.Parent = f
 
 	local UIcorner = Instance.new("UICorner")
 	UIcorner.CornerRadius = UDim.new(0, 16)
@@ -37,38 +49,25 @@ function Zipp:createPanel(pai)
 	listLayout.Parent = f
 	listLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	listLayout.Padding = UDim.new(0, 10)
+	listLayout.VerticalAlignment = Enum.VerticalAlignment.Top
 end
 
-function Zipp:addButton(Texto, r, g, b, action)
+function Zipp:setTitle(text)
+	if titleLabel then
+		titleLabel.Text = text
+	end
+end
+
+function Zipp:addButton(Texto, scaled, r, g, b, action)
 	local bt = Instance.new("TextButton")
-	bt.Name = "toggln"
+	bt.Name = "Buttan"
 	bt.Size = UDim2.new(0, 190, 0, 40)
 	bt.Text = Texto
 	bt.BackgroundColor3 = Color3.new(r, g, b)
 	bt.TextColor3 = Color3.new(1, 1, 1)
+	bt.TextScaled = scaled
 	bt.Parent = f
 	bt.MouseButton1Click:Connect(function()
-		action()
-	end)
-end
-
-function Zipp:addToggle(Textotg, action)
-  local tg = Instance.new("TextButton")
-	tg.Name = "toggle"
-	tg.Size = UDim2.new(0, 190, 0, 40)
-	tg.Text = Textotg
-	tg.BackgroundColor3 = Color3.new(0, 1, 0)
-	tg.TextColor3 = Color3.new(0, 0, 0)
-	tg.Parent = f
-	tg.MouseButton1Click:Connect(function()
-        act = not act
-        if act then
-          tg.BackgroundColor3 = Color3.new(1, 0, 0)
-          tg.TextColor3 = Color3.new(1, 1, 1)
-        else
-          tg.BackgroundColor3 = Color3.new(0, 1, 0)
-          tg.TextColor3 = Color3.new(0, 0, 0)
-        end
 		action()
 	end)
 end
